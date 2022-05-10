@@ -25,25 +25,25 @@ const data = {
 let gameOn;
 
 $(document).on("keydown", (event) => {
-    if (event.key === "ArrowDown" || event.key === "Down") { 
+    if (event.key === "ArrowDown" || event.key === "Down" || event.key === "s" || event.key === "S") { 
         if (data.direction === "up") {
             return;
         } else {
             data.direction = "down";
         }
-    } else if (event.key === "ArrowUp" || event.key === "Up") {
+    } else if (event.key === "ArrowUp" || event.key === "Up" || event.key === "w" || event.key === "W") {
         if (data.direction === "down") {
             return;
         } else {
             data.direction = "up";
         }
-    } else if (event.key === "ArrowLeft" || event.key === "Left") {
+    } else if (event.key === "ArrowLeft" || event.key === "Left" || event.key === "a" || event.key === "A") {
         if (data.direction === "right") {
             return;
         } else {
             data.direction = "left"
         }
-    } else if (event.key === "ArrowRight" || event.key === "Right") {
+    } else if (event.key === "ArrowRight" || event.key === "Right" || event.key === "d" || event.key === "D") {
         if (data.direction === "left") {
             return;
         } else {
@@ -235,18 +235,21 @@ const initGame = (speed) => {
 }
 
 const handleStartEasy = () => {
-    $("#rules").hide();
+    $("#rules").remove();
+    $(".controls").remove();
     data.speed = 250;
     initGame(250);
 }
 
 const handleStartMedium = () => {
-    $("#rules").hide();
+    $("#rules").remove();
+    $(".controls").remove();
     data.speed = 175;
     initGame(175);
 }
 const handleStartHard = () => {
-    $("#rules").hide();
+    $("#rules").remove();
+    $(".controls").remove();
     data.speed = 75;
     initGame(75);
 }
@@ -264,11 +267,18 @@ const startingPage = () => {
     const $rules = $("<div>").attr("id", "rules")
     $rules.text("Welcome to Hungry Snake")
     const $p =  $("<p>").attr("id", "innerRules").text("Use your arrow keys to guide the snake to its food, avoid the walls and do not eat your own tail!")
-    
-    
 
     $rules.append($p, $speedOption)
     $(".container").append($rules);
+
+    const $controls = $("<div>").addClass("controls").text("Controls:")
+    const $up = $("<div>").attr("id", "up").text("W or ⥣")
+    const $down = $("<div>").attr("id", "down").text("S or ⥥")
+    const $right = $("<div>").attr("id", "right").text("D or ⥤")
+    const $left = $("<div>").attr("id", "left").text("A or ⥢")
+    
+    $controls.append($up, $down, $left, $right)
+    $(".container").append($controls)
 };
 
 const main = () => {
