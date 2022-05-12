@@ -10,15 +10,16 @@ body {
     overflow-y: hidden; 
 }
 
+/* contains the main header/title of game */
 .flexContainer {
     display: flex;
     justify-content: center;
     width: 500px;
     height: 18vh;
-    margin: auto;
-    
+    margin: auto; 
 }
 
+/* contains everytjing else */
 .container {
     margin: auto;
     display: grid; 
@@ -30,6 +31,7 @@ body {
     justify-content: center;
     
 }
+
 .title {
     margin: auto;
     padding: 10px;
@@ -46,11 +48,36 @@ body {
     font-family: 'Righteous', cursive;
     color: white;
     background-color: rgba(128, 135, 135, 0.6);
-    /* background-color: lightslategray; */
     padding: 10px;
     text-shadow: 2px 2px 4px #000000;
 }
 
+/* main block for welcome page + welcome to hungry snake */
+#rules {
+    background-color: slategray;
+    color: white;
+    font-size: 30px;
+    text-shadow: 2px 2px 4px #000000;
+    width: 500px;
+    margin: auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    opacity: 0.9;
+    grid-row: 1;
+    grid-column: 1/4;
+}
+
+/* how to play instructions */
+#innerRules {
+    color: white;
+    font-size: 20px;
+    margin: 10px;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+/* choose difficulty mode box */
 .speedOption {
     width: 85%;
     margin: 20px auto 0;
@@ -118,30 +145,7 @@ body {
     border: 4px ridge darkslategray;
 }
 
-#rules {
-    background-color: slategray;
-    color: white;
-    font-size: 30px;
-    text-shadow: 2px 2px 4px #000000;
-    width: 500px;
-    margin: auto;
-    padding-top: 30px;
-    padding-bottom: 20px;
-    padding-left: 30px;
-    padding-right: 30px;
-    opacity: 0.9;
-    grid-row: 1;
-    grid-column: 1/4;
-  
-}
-
-#innerRules {
-    color: white;
-    font-size: 20px;
-    margin: 10px;
-    text-shadow: 2px 2px 4px #000000;
-}
-
+/* directional control instructions */
 .controls {
     display: grid;
     margin: auto;
@@ -203,13 +207,30 @@ body {
     border-bottom: 3px solid white;
 }
 
+/* display points while in game */
+.points {
+    background-color: slategray;
+    color: white;
+    font-size: 20px;
+    text-shadow: 2px 2px 4px #000000;
+    width: 200px;
+    padding: 7px;
+    margin: 0 auto;
+    opacity: 0.8;
+    grid-column: 2;
+    grid-row: 1/2; 
+}
+
+/* main box containing game play area */
 .table {
     grid-row: 2;
     grid-column: 1/4;
-    margin: 20px auto 0;
-    justify-content: center;
+    margin: 10px auto 0;
+    width: 500px;
+    height:fit-content;
 }
 
+/* nested grid containing all the grid divs */
 .arena {
     border: darkslategray 20px ridge;
     /* background-color: #CFCECE; */
@@ -220,22 +241,11 @@ body {
     width:fit-content;
     grid-template-columns: repeat(22, 20px);
     grid-template-rows: repeat(22, 20px);
-    
-    /* place-self: center; */
-
 }
 
-
-
+/* each grid cell */
 .cell {
-    /* width: 14px;
-    height: 14px; */
     border: 3px solid transparent;
-    /* width: 14px;
-    height: 14px; */
-    
-    
-     /* to remove border later */
 }
 
 .snakeBody {
@@ -255,25 +265,15 @@ body {
     opacity: 1;
 }
 
-.points {
-    background-color: slategray;
-    color: white;
-    font-size: 20px;
-    text-shadow: 2px 2px 4px #000000;
-    width: 200px;
-    padding: 5px;
-    margin: 0 auto;
-    opacity: 0.8;
-    grid-column: 2;
-    grid-row: 1/2; 
-}
-
+/* ending page main block */
 .end {
     grid-column: 1/4;
     grid-row: 1;
+    margin: auto;
+    width: 470px;
 }
 
-
+/* GAME OVER */
 #lose {
     background-color: slategray;
     text-shadow: 2px 2px 4px #000000;
@@ -282,12 +282,16 @@ body {
     width: 430px;
     margin: auto;
     padding: 20px;
-    opacity: 0.8;
-    
-    place-self: center;
-    
+    opacity: 0.8;  
 }
 
+/* you fed the snake xx times */
+#score {
+    font-size: 20px;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+/* replay button as a div */
 #again {
     background-color: darkslategray;
     text-shadow: 2px 2px 4px #000000;
@@ -306,11 +310,7 @@ body {
     text-shadow: 2px 2px 4px #ffffff;
 }
 
-#score {
-    font-size: 20px;
-    text-shadow: 2px 2px 4px #000000;
-}
-
+/* re-select difficulty button as a div */
 #returnHome {
     background-color: darkslategray;
     text-shadow: 2px 2px 4px #000000;
@@ -327,4 +327,10 @@ body {
     border: 5px ridge darkslategray;
     color: darkslategray;
     text-shadow: 2px 2px 4px #ffffff;
+}
+
+/* personal high score */
+.scoreBoard {
+    margin-top: 20px;
+    font-size: 30px;
 }
