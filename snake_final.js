@@ -3,10 +3,10 @@ const data = {
         boxes: 22,
     },
     snake: [
-            {row: 1, cell: 4},
             {row: 1, cell: 3},
             {row: 1, cell: 2},
-            {row: 1, cell: 1}
+            {row: 1, cell: 1},
+            {row: 1, cell: 0}
     ],
     direction: "right",
     foodCount: 0,
@@ -47,10 +47,10 @@ const endingPage = () => {
     $again.on("click", () => {
         $(".end").remove();
         data.snake = [
-            {row: 1, cell: 4},
             {row: 1, cell: 3},
             {row: 1, cell: 2},
-            {row: 1, cell: 1}
+            {row: 1, cell: 1},
+            {row: 1, cell: 0}
         ];
         data.direction = "right";
         data.foodCount = 0;
@@ -310,3 +310,4 @@ const main = () => {
  }
  
  $(main);
+
