@@ -19,7 +19,7 @@ body {
     margin: auto; 
 }
 
-/* contains everytjing else */
+/* contains everything else */
 .container {
     margin: auto;
     display: grid; 
@@ -248,14 +248,19 @@ body {
     border: 3px solid transparent;
 }
 
-.snakeBody {
+.snakeBody2 {
+    background-color: rgb(116, 31, 31);
+    border: 3px solid rgb(116, 31, 31);
+    opacity: 1;
+}
+.snakeBody1 {
     background-color: black;
     border: 3px solid black;
     opacity: 1;
 }
 
 .snakeHead {
-    background-color: brown;
+    background-color: black;
     opacity: 1;
     border: 3px solid black;
 }

@@ -99,7 +99,7 @@ const checkOutOfBoundary = () => {
 // to check if snake hits own tail
 // if yes, clear interval and end game
 const checkHitOwnTail = () => {
-    if ($(".snakeHead").hasClass("snakeBody")) {
+    if ($(".snakeHead").hasClass("snakeBody1") || $(".snakeHead").hasClass("snakeBody2")) {
         clearInterval(gameOn)
         endGame(); 
     } 
@@ -108,10 +108,13 @@ const checkHitOwnTail = () => {
 // to generate random food box
 // if food box coincides with snake body, regenerate the food box
 const makeFood = () => {
-    const row = Math.floor(Math.random() * data.arena.boxes);
-    const cell = Math.floor(Math.random() * data.arena.boxes);
+    let row = Math.floor(Math.random() * data.arena.boxes);
+    let cell = Math.floor(Math.random() * data.arena.boxes);
 
-    while ($(`#row${row}cell${cell}`).hasClass("snakeBody") || $(`#row${row}cell${cell}`).hasClass("snakeHead")) {
+    while ($(`#row${row}cell${cell}`).hasClass("snakeBody1") 
+        || $(`#row${row}cell${cell}`).hasClass("snakeBody2") 
+        || $(`#row${row}cell${cell}`).hasClass("snakeHead")) {
+
         row = Math.floor(Math.random() * data.arena.boxes);
         cell = Math.floor(Math.random() * data.arena.boxes);
     }    
@@ -186,18 +189,13 @@ const updateSnake = () => {
     
     if (data.direction === "right") {
         data.snake.unshift({row: data.snake[0].row, cell: data.snake[0].cell + 1});
-        
     } else if (data.direction === "down") {
         data.snake.unshift({row: data.snake[0].row + 1, cell: data.snake[0].cell});
-        
     } else if (data.direction === "up") {
         data.snake.unshift({row: data.snake[0].row - 1, cell: data.snake[0].cell});
-        
     } else if (data.direction === "left") {
         data.snake.unshift({row: data.snake[0].row, cell: data.snake[0].cell - 1});
-        
     }
-    
 }
 
 // displays snake on screen
@@ -205,15 +203,20 @@ const showSnake = () => {
     updateSnake();
     checkOutOfBoundary();
     // clear previous snake from screen
-    $(".snakeBody").removeClass("snakeBody")
+    $(".snakeBody1").removeClass("snakeBody1")
+    $(".snakeBody2").removeClass("snakeBody2")
     $(".snakeHead").removeClass("snakeHead");
     // print snake based on updated snake body array
     for (let i = 0; i < data.snake.length; i++) {
         const $snakeID = $(`#row${data.snake[i].row}cell${data.snake[i].cell}`);
         if (i === 0) {
             $snakeID.addClass("snakeHead");
-        } else {
-            $snakeID.addClass("snakeBody")
+        } else if (i > 0) {
+            if (i % 2 === 0) {
+                $snakeID.addClass("snakeBody2")
+            } else {
+                $snakeID.addClass("snakeBody1")
+            }
         }
     }
     checkHitOwnTail();
@@ -243,7 +246,6 @@ const makeTable = () => {
             $td.addClass("cell")
             $arena.append($td)
         }
-    
     }
     $table.append($arena)
     $(".container").append($table)
@@ -308,5 +310,3 @@ const main = () => {
  }
  
  $(main);
-
-
