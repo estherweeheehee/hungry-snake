@@ -117,27 +117,35 @@ const checkHitOwnTail = () => {
     } 
 }
 
+const checkFoodBombClash = (r, c) => {
+    const $food = $(`#row${r}cell${c}`);
+    if ($food.hasClass("snakeBody1")
+    || $food.hasClass("snakeBody2")
+    || $food.hasClass("snakeHead")
+    || $food.hasClass("bomb")) {
+        return true
+    } else if ({row: r + 1, cell: c} === data.bomb[0]
+        || {row: r - 1, cell: c} === data.bomb[0]
+        || {row: r + 1, cell: c} === data.bomb[1]
+        || {row: r - 1, cell: c} === data.bomb[1]) {
+            return true;
+    } else {
+        return false
+    }
+}
+
 // to generate random food box
 // if food box coincides with snake body, regenerate the food box
 const makeFood = () => {
     let row = Math.floor(Math.random() * data.arena.boxes);
     let cell = Math.floor(Math.random() * data.arena.boxes);
 
-    while ($(`#row${row}cell${cell}`).hasClass("snakeBody1") 
-        || $(`#row${row}cell${cell}`).hasClass("snakeBody2") 
-        || $(`#row${row}cell${cell}`).hasClass("snakeHead")
-        || $(`#row${row}cell${cell}`).hasClass("bomb")
-        || row === data.bomb[0].row - 1 && cell === data.bomb[0].cell
-        || row === data.bomb[0].row + 1 && cell === data.bomb[0].cell
-        || row === data.bomb[1].row - 1 && cell === data.bomb[1].cell
-        || row === data.bomb[1].row + 1 && cell === data.bomb[1].cell
-        ) {
-
+    while (checkFoodBombClash(row, cell)) {
         row = Math.floor(Math.random() * data.arena.boxes);
         cell = Math.floor(Math.random() * data.arena.boxes);
     }    
-    const $foodCell = $(`#row${row}cell${cell}`)
     
+    const $foodCell = $(`#row${row}cell${cell}`)
     $foodCell.addClass("food");
     data.food.row = row;
     data.food.cell = cell;
@@ -146,76 +154,6 @@ const makeFood = () => {
     const blue = Math.floor(Math.random() * 256);
     const green = Math.floor(Math.random() * 256);
     $(".food").css("background-color", `rgb(${red}, ${green}, ${blue})`).css("border-color", "white");
-
-    
-}
-
-const makeBomb = () => {
-    $(".bomb").removeClass("bomb")
-
-    let row = Math.floor(Math.random() * (data.arena.boxes - 2)) + 1;
-    let cell = Math.floor(Math.random() * (data.arena.boxes - 2));
-
-
-    while ($(`#row${row}cell${cell}`).hasClass("snakeBody1") 
-        || $(`#row${row}cell${cell}`).hasClass("snakeBody2") 
-        || $(`#row${row}cell${cell}`).hasClass("snakeHead")
-        || $(`#row${row}cell${cell}`).hasClass("food")
-
-        || $(`#row${row}cell${cell + 2}`).hasClass("snakeBody1") 
-        || $(`#row${row}cell${cell + 2}`).hasClass("snakeBody2") 
-        || $(`#row${row}cell${cell + 2}`).hasClass("snakeHead")
-        || $(`#row${row}cell${cell + 2}`).hasClass("food")
-
-        || $(`#row${row - 1}cell${cell + 1}`).hasClass("snakeBody1") 
-        || $(`#row${row - 1}cell${cell + 1}`).hasClass("snakeBody2") 
-        || $(`#row${row - 1}cell${cell + 1}`).hasClass("snakeHead")
-        || $(`#row${row - 1}cell${cell + 1}`).hasClass("food")
-
-        || $(`#row${row + 1}cell${cell + 1}`).hasClass("snakeBody1") 
-        || $(`#row${row + 1}cell${cell + 1}`).hasClass("snakeBody2") 
-        || $(`#row${row + 1}cell${cell + 1}`).hasClass("snakeHead")
-        || $(`#row${row + 1}cell${cell + 1}`).hasClass("food")
-
-        || $(`#row${row}cell${cell + 1}`).hasClass("food")
-        ) {
-
-        row = Math.floor(Math.random() * data.arena.boxes);
-        cell = Math.floor(Math.random() * data.arena.boxes);
-
-    }    
-    data.bomb[0].row = row;
-    data.bomb[0].cell = cell;
-    data.bomb[1].row = row;
-    data.bomb[1].cell = cell + 2;
-    data.bomb[2].row = row - 1;
-    data.bomb[2].cell = cell + 1;
-    data.bomb[3].row = row + 1;
-    data.bomb[3].cell = cell + 1;
-    data.bomb[4].row = row;
-    data.bomb[4].cell = cell + 1;
-    const $bombCell0 = $(`#row${data.bomb[0].row}cell${data.bomb[0].cell}`)
-    const $bombCell1 = $(`#row${data.bomb[1].row}cell${data.bomb[1].cell}`)
-    const $bombCell2 = $(`#row${data.bomb[2].row}cell${data.bomb[2].cell}`)
-    const $bombCell3 = $(`#row${data.bomb[3].row}cell${data.bomb[3].cell}`)
-    const $bombCell4 = $(`#row${data.bomb[4].row}cell${data.bomb[4].cell}`)
-
-    $bombCell0.addClass("bomb");
-    $bombCell1.addClass("bomb");
-    $bombCell2.addClass("bomb");
-    $bombCell3.addClass("bomb");
-    $bombCell4.addClass("bomb");
-    
-}
-
-const checkBomb = () => {
-    for (let i = 0; i < data.bomb.length; i++) {
-        if (data.snake[0].row === data.bomb[i].row && data.snake[0].cell === data.bomb[i].cell) {
-            $(".bomb").removeClass("bomb")
-            clearInterval(gameOn)
-            endGame(); 
-        }
-    }
 }
 
 // to check if snake ate the food
@@ -233,6 +171,79 @@ const checkFood = () => {
         return true;
     } else {
         return false;
+    }
+}
+
+//generate bomb
+const makeBomb = () => {
+    // clear previous bomb
+    $(".bomb").removeClass("bomb")
+
+    // generate coordinates for west(left-most) bomb
+    let row = Math.floor(Math.random() * (data.arena.boxes - 2)) + 1;
+    let cell = Math.floor(Math.random() * (data.arena.boxes - 2));
+
+    //check if any of the five bombs coincides with food or snake class
+    while (checkForClash(row, cell)) {
+        row = Math.floor(Math.random() * data.arena.boxes);
+        cell = Math.floor(Math.random() * data.arena.boxes);
+    }    
+
+    //store the final bomb coordinates in the data
+    storeBombCoordinates(row, cell);
+    //assign bomb classes according to the finalized bomb coordinates
+    finalizeBomb();    
+}
+
+const storeBombCoordinates = (r, c) => {
+    // 0: west bomb/left-most bomb
+    data.bomb[0].row = r
+    data.bomb[0].cell = c;
+    // 1: east bomb/right-most bomb
+    data.bomb[1].row = r;
+    data.bomb[1].cell = c + 2;
+    // 2: north bomb/top-most bomb
+    data.bomb[2].row = r - 1;
+    data.bomb[2].cell = c + 1;
+    // 3: south bomb/bottom bomb
+    data.bomb[3].row = r + 1;
+    data.bomb[3].cell = c + 1;
+    // 4: center bomb
+    data.bomb[4].row = r;
+    data.bomb[4].cell = c + 1;
+}
+
+//check if any of the five bombs coincides with food or snake class
+const checkForClash = (r, c) => {
+    storeBombCoordinates(r, c);
+    for (let i = 0; i < data.bomb.length; i++) {
+        const $bomb = $(`#row${data.bomb[i].row}cell${data.bomb[i].cell}`)
+        if ($bomb.hasClass("snakeBody1")
+        || $bomb.hasClass("snakeBody2")
+        || $bomb.hasClass("snakeHead")
+        || $bomb.hasClass("food")) {
+            return true;
+        }
+    }
+    return false;
+}
+
+//assign bomb classes according to the finalized bomb coordinates
+const finalizeBomb = () => {
+    for (let i = 0; i < data.bomb.length; i++) {
+        const $bombCell = $(`#row${data.bomb[i].row}cell${data.bomb[i].cell}`)
+        $bombCell.addClass("bomb")
+    }
+}
+
+// check if snake head hits bomb
+const checkBomb = () => {
+    for (let i = 0; i < data.bomb.length; i++) {
+        if (data.snake[0].row === data.bomb[i].row && data.snake[0].cell === data.bomb[i].cell) {
+            $(".bomb").removeClass("bomb")
+            clearInterval(gameOn)
+            endGame(); 
+        }
     }
 }
 
@@ -311,12 +322,12 @@ const showSnake = () => {
             }
         }
     }
+    // check if snake head hits any part of the snake body
     checkHitOwnTail();
-    
+    // only in extreme mode: check if snake head hits the bomb
     if (data.displaySpeed === "extreme") {
         checkBomb();
     }
-    
 }
 
 const initGame = (speed) => {
