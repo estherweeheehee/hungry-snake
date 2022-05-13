@@ -124,10 +124,10 @@ const checkFoodBombClash = (r, c) => {
     || $food.hasClass("snakeHead")
     || $food.hasClass("bomb")) {
         return true
-    } else if ({row: r + 1, cell: c} === data.bomb[0]
-        || {row: r - 1, cell: c} === data.bomb[0]
-        || {row: r + 1, cell: c} === data.bomb[1]
-        || {row: r - 1, cell: c} === data.bomb[1]) {
+    } else if ((data.bomb[0].row - 1 === r && data.bomb[0].cell === c)
+        || (data.bomb[0].row + 1 === r && data.bomb[0].cell === c)
+        || (data.bomb[1].row - 1 === r && data.bomb[1].cell === c)
+        || (data.bomb[1].row + 1 === r && data.bomb[1].cell === c)) {
             return true;
     } else {
         return false
@@ -165,7 +165,6 @@ const checkFood = () => {
         if (data.displaySpeed === "extreme" && data.foodCount % 5 === 0) {
             makeBomb();
         }
-        
         updatePoints();
         makeFood();
         return true;
@@ -347,7 +346,6 @@ const makeTable = () => {
     const $table = $("<div>").addClass("table")
     const $arena = $("<div>").addClass("arena")
     for (let i = 0; i < data.arena.boxes; i++) {
-
         for (let j = 0; j < data.arena.boxes; j++) {
             const $td = $("<div>").attr("id", `row${i}cell${j}`);
             const gr = i + 1;
