@@ -15,10 +15,15 @@ const data = {
         cell: null,
     },
     bomb: [
+        //west bomb
         {row: null, cell: null},
+        //east bomb
         {row: null, cell: null},
+        //north bomb
         {row: null, cell: null},
+        //south bomb
         {row: null, cell: null},
+        //middle bomb
         {row: null, cell: null}
 ],
     speed: null,
@@ -121,7 +126,12 @@ const makeFood = () => {
     while ($(`#row${row}cell${cell}`).hasClass("snakeBody1") 
         || $(`#row${row}cell${cell}`).hasClass("snakeBody2") 
         || $(`#row${row}cell${cell}`).hasClass("snakeHead")
-        || $(`#row${row}cell${cell}`).hasClass("bomb")) {
+        || $(`#row${row}cell${cell}`).hasClass("bomb")
+        || row === data.bomb[0].row - 1 && cell === data.bomb[0].cell
+        || row === data.bomb[0].row + 1 && cell === data.bomb[0].cell
+        || row === data.bomb[1].row - 1 && cell === data.bomb[1].cell
+        || row === data.bomb[1].row + 1 && cell === data.bomb[1].cell
+        ) {
 
         row = Math.floor(Math.random() * data.arena.boxes);
         cell = Math.floor(Math.random() * data.arena.boxes);
