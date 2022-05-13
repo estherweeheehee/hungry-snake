@@ -18,6 +18,7 @@ const data = {
         {row: null, cell: null},
         {row: null, cell: null},
         {row: null, cell: null},
+        {row: null, cell: null},
         {row: null, cell: null}
 ],
     speed: null,
@@ -181,15 +182,19 @@ const makeBomb = () => {
     data.bomb[2].cell = cell + 1;
     data.bomb[3].row = row + 1;
     data.bomb[3].cell = cell + 1;
+    data.bomb[4].row = row;
+    data.bomb[4].cell = cell + 1;
     const $bombCell0 = $(`#row${data.bomb[0].row}cell${data.bomb[0].cell}`)
     const $bombCell1 = $(`#row${data.bomb[1].row}cell${data.bomb[1].cell}`)
     const $bombCell2 = $(`#row${data.bomb[2].row}cell${data.bomb[2].cell}`)
     const $bombCell3 = $(`#row${data.bomb[3].row}cell${data.bomb[3].cell}`)
+    const $bombCell4 = $(`#row${data.bomb[4].row}cell${data.bomb[4].cell}`)
 
     $bombCell0.addClass("bomb");
     $bombCell1.addClass("bomb");
     $bombCell2.addClass("bomb");
     $bombCell3.addClass("bomb");
+    $bombCell4.addClass("bomb");
     
 }
 
