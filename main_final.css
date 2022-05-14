@@ -8,6 +8,8 @@ body {
     font-family: 'Righteous', cursive;
     /* height: 100vh; */
     overflow-y: hidden; 
+    background-size: cover;
+    background-color: transparent;
 }
 
 /* contains the main header/title of game */
