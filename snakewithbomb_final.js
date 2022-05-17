@@ -32,6 +32,21 @@ const data = {
 
 let gameOn;
 
+// to check and update localStorage of highscores for current speed mode
+const checkHighScore = (speed) => {
+    let previousScores = window.localStorage.getItem(`${speed}`)
+    const updatedScores = [data.foodCount];
+    if (previousScores !== null) {
+        updatedScores.push(previousScores);
+        updatedScores.sort((a,b) => {
+            return b-a;
+        })
+    }
+    const highest = updatedScores[0]
+    window.localStorage.setItem(`${speed}`, highest);
+    return highest;
+}
+
 const endGame = () => {
     $(".table").remove()
     $(".points").remove()
@@ -70,27 +85,13 @@ const endingPage = () => {
     })
     // to refresh page & re-select speed
     $returnHome.on("click", () => {
-        location.reload()
+        $(".end").remove()
+        startingPage();
+        // location.reload()
     })
 }
 
-// to check and update localStorage of highscores for current speed mode
-const checkHighScore = (speed) => {
-    let previousScores = window.localStorage.getItem(`${speed}`)
-    const updatedScores = [data.foodCount];
-    if (previousScores !== null) {
-        updatedScores.push(previousScores);
-        updatedScores.sort((a,b) => {
-            return b-a;
-        })
-    }
-    const highest = updatedScores[0]
-    window.localStorage.setItem(`${speed}`, highest);
-    return highest;
-}
-
-// to check if snake went out of game boundary
-// if yes, clear interval and end game
+// to check if snake went out of game boundary: if yes, clear interval and end game
 const checkOutOfBoundary = () => {
     const rightWallCell = data.arena.boxes - 1;
     const leftWallCell = 0;
@@ -108,8 +109,7 @@ const checkOutOfBoundary = () => {
     }
 }  
 
-// to check if snake hits own tail
-// if yes, clear interval and end game
+// to check if snake hits own tail: if yes, clear interval and end game
 const checkHitOwnTail = () => {
     if ($(".snakeHead").hasClass("snakeBody1") || $(".snakeHead").hasClass("snakeBody2")) {
         clearInterval(gameOn)
