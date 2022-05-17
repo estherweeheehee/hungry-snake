@@ -85,9 +85,7 @@ const endingPage = () => {
     })
     // to refresh page & re-select speed
     $returnHome.on("click", () => {
-        $(".end").remove()
-        startingPage();
-        // location.reload()
+        location.reload()
     })
 }
 
